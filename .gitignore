@@ -1,3 +1,18 @@
+faiss_news_store/
+news_env/
+src/
+news_apis/
+.env
+analysis.txt
+extra_func.txt
+google-sheets-key.json
+h.py
+marketaux.py
+add_analysis_to_gsheets.py
+test_gpt.py
+test.py
+test2.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

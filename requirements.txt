@@ -1,0 +1,32 @@
+#Utilities
+gspread
+gspread_dataframe
+oauth2client
+feedparser
+apscheduler
+selenium
+unstructured
+newspaper3k
+lxml_html_clean
+faiss-cpu
+# sentence-transformers
+
+#LangChain Core
+langchain
+langchain-core
+langchain-community
+langchain-huggingface
+
+#Google Gemini (PaLM) Integration
+langchain-google-genai
+google-generativeai
+
+#OpenAI Integration
+langchain-openai 
+openai
+
+#Enviornment Variable Management
+python-dotenv
+
+#Yahoo Finance library 
+yfinance
