@@ -12,6 +12,15 @@ add_analysis_to_gsheets.py
 test_gpt.py
 test.py
 test2.py
+breakout_alerts.py
+chart.py
+dalal_street.py 
+dhan.py 
+seen_breakout_articles.json 
+seen_hashes_penny.json 
+telegram_alerts_penny_stocks.py 
+tick_data_all_stocks_combined.csv
+tradebrains.py 
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

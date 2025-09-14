@@ -9,6 +9,7 @@ unstructured
 newspaper3k
 lxml_html_clean
 faiss-cpu
+webdriver-manager
 # sentence-transformers
 
 #LangChain Core

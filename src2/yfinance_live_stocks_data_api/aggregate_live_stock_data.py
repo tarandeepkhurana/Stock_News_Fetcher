@@ -5,7 +5,7 @@ logger = setup_logger(__name__)
 
 def aggregate_multi_stock_tick_data(csv_path: str) -> dict:
     df = pd.read_csv(csv_path)
-
+    
     df['readable_time'] = pd.to_datetime(df['readable_time'])
     df.sort_values(['id', 'readable_time'], inplace=True)
 

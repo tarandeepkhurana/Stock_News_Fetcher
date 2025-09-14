@@ -18,7 +18,7 @@ def fetch_rss_entries(feed_url: str) -> list[dict]:
             "title": title,
             "content": description,
             "url": link,
-            "source": "Web",
+            "source": "RSS-EconomicTimes",
             "published_at": published
         })
 

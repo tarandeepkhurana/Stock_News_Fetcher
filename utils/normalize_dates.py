@@ -20,8 +20,23 @@ def normalize_date(date_str):
             dt = date_parser.parse(date_str)
 
         # Case 3: Relative — e.g., "1 Hour ago", "3 days ago"
-        elif re.match(r"\d+\s+(minute|hour|day|week)s?\s+ago", date_str.lower()):
-            match = re.match(r"(\d+)\s+(minute|hour|day|week)s?\s+ago", date_str.lower())
+        elif re.match(r"[\d\.]+\s+(minute|hour|day|week)s?\s+ago", date_str.lower()):
+            match = re.match(r"([\d\.]+)\s+(minute|hour|day|week)s?\s+ago", date_str.lower())
+            value = float(match.group(1))  # support decimals like 20.5
+            unit = match.group(2)
+            now = datetime.now(pytz.UTC)
+            if unit == "minute":
+                dt = now - timedelta(minutes=value)
+            elif unit == "hour":
+                dt = now - timedelta(hours=value)
+            elif unit == "day":
+                dt = now - timedelta(days=value)
+            elif unit == "week":
+                dt = now - timedelta(weeks=value)
+        
+        # Case 4: Groww format — e.g., "4 hours", "16 hours", "2 days"
+        elif re.match(r"\d+\s+(minute|hour|day|week)s?$", date_str.lower()):
+            match = re.match(r"(\d+)\s+(minute|hour|day|week)s?$", date_str.lower())
             value = int(match.group(1))
             unit = match.group(2)
             now = datetime.now(pytz.UTC)
@@ -51,5 +66,5 @@ def normalize_date(date_str):
         return ""
 
 if __name__ == "__main__":
-    result = normalize_date("3 days ago")
+    result = normalize_date("25.5 hours ago")
     print(result)

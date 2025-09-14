@@ -47,11 +47,11 @@ def job_runner():
         market_close = dtime(15, 30)
 
         use_live_data = market_open <= now <= market_close
-
+        ticks_collected = False
         if use_live_data:
             print("============ COLLECTING LIVE TICK DATA ===========")
             try:
-                asyncio.run(capture_live_stocks_data(
+                ticks_collected = asyncio.run(capture_live_stocks_data(
                     symbols=unique_tickers, 
                     duration_sec=300, 
                     csv_filename="tick_data_all_stocks_combined.csv"
@@ -59,13 +59,17 @@ def job_runner():
             except Exception as e:
                 logger.error(f"Error in WebSocket thread: {e}")
                 return
-
-            print("=========== AGGREGATING LIVE TICK DATA ===========")
-            result = aggregate_multi_stock_tick_data("tick_data_all_stocks_combined.csv")
         else:
             logger.info("⏳ Market is closed. Skipping live data collection.")
             result = {}
         
+        if ticks_collected:
+            print("=========== AGGREGATING LIVE TICK DATA ===========")
+            result = aggregate_multi_stock_tick_data("tick_data_all_stocks_combined.csv")
+        else:
+            logger.warning("⚠️ Skipping aggregation due to no new tick data.")
+            result = {}
+
         NO_IMPACT_TEXT = "News does not indicate material impact on the stock. No further analysis required."
 
         print("=============== STARTING ANALYSIS ================")

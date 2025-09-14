@@ -10,7 +10,7 @@ import time
 
 logger = setup_logger(__name__)
 
-async def capture_live_stocks_data(symbols: list, duration_sec: int, csv_filename: str):
+async def capture_live_stocks_data(symbols: list, duration_sec: int, csv_filename: str) -> bool:
     collected_ticks = []
 
     async def handler(msg):
@@ -28,7 +28,7 @@ async def capture_live_stocks_data(symbols: list, duration_sec: int, csv_filenam
     ws = AsyncWebSocket()
     await ws.subscribe(symbols)
 
-    logger.info("✅ Connected & subscribed to", symbols)
+    logger.info(f"✅ Connected & subscribed to {symbols}")
     logger.info(f"⏱️  Collecting data for {duration_sec} seconds...")
 
     listener_task = asyncio.create_task(ws.listen(handler))
@@ -40,7 +40,7 @@ async def capture_live_stocks_data(symbols: list, duration_sec: int, csv_filenam
         listener_task.cancel()
         await ws.close()
 
-    logger.info("✅ Finished collecting", len(collected_ticks), "ticks.")
+    logger.info(f"✅ Finished collecting {len(collected_ticks)} ticks.")
 
     # Save to CSV
     if collected_ticks:
@@ -57,8 +57,10 @@ async def capture_live_stocks_data(symbols: list, duration_sec: int, csv_filenam
 
         df.to_csv(csv_filename, index=False)
         logger.info(f"📁 Saved to {csv_filename}")
+        return True
     else:
         logger.info("⚠️ No ticks collected.")
+        return False
 
 
     # sys.exit(0)  # Auto exit
